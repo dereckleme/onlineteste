@@ -1,0 +1,199 @@
+<div class="alert alert-block">
+  <h4>Gerenciamento de Categorias</h4>
+     Nessa sessão você pode gerenciar todas categorias e subcategorias de acordo com suas necessidades.
+</div>
+
+<div class="btn-toolbar" style="margin: 0;">
+        
+              <div class="btn-group">
+                <button class="btn btn-success dropdown-toggle" data-toggle="dropdown">Gerenciar Categorias <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="#" class="actionCategoriaGerenciar">Gerenciar</a></li>
+                   <li><a href="#criaCategorias" data-toggle="modal">Adicionar</a></li>
+                </ul>
+              </div><!-- /btn-group -->
+              <div class="btn-group">
+                <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">Gerenciar Subcategorias <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="#" class="actionSubcategoriaGerenciar">Gerenciar</a></li>
+                   <li><a href="#criaSubCategorias" data-toggle="modal">Adicionar</a></li>
+                </ul>
+              </div><!-- /btn-group -->
+              
+              
+              <div class="btn-group">
+                <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Gerenciar Rereferencias <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a href="#" class="actionSubcategoriaGerenciar">Gerenciar</a></li>
+                   <li><a href="#criaReferencias" data-toggle="modal">Adicionar</a></li>
+                </ul>
+              </div><!-- /btn-group -->
+            </div> 
+            
+            <br/>
+                
+            <div class="gerCategorias" style="display:none">
+            
+             <h5>Gerenciar Categorias:</h5>  
+             
+           <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Titulo</th>
+                  <th width="100"><center>Gerenciar</center></th>
+                </tr>
+              </thead>
+              <tbody>
+              <?php 
+                               foreach($this->data as $data)
+                               {
+                               	?>
+                <tr class="success">
+                  <td><?=$data->getIdcategorias()?></td>
+                  <td><B><?=$data->getNome()?></B></td>
+                  <td><center><i class="icon-pencil"></i><i class="icon-trash"></i></center></td>
+                </tr>
+                <?php 
+                               }
+                ?>
+              </tbody>
+            </table>
+            <br/>
+           </div>
+           <div class="gerSubCategorias" style="display:none"> 
+             <h5>Gerenciar Subcategorias:</h5>  
+           <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Categoria</th>
+                  <th>Titulo Subcategoria</th>
+                  <th width="100"><center>Gerenciar</center></th>
+                </tr>
+              </thead>
+              <tbody>
+               <?php 
+                               foreach($this->data as $data)
+                               {
+                               	?>
+              <tr class="info">
+                  <td>1</td>
+                   <td><b><?=$data->getNome()?></b></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                            <?php 
+                                            foreach($data->getSubcategorias() AS $Subcategorias)
+                                            {
+                                        ?>
+                <tr class="success">
+                  <td>1</td>
+                   <td></td>
+                  <td><b><?=$Subcategorias->getNome()?></b></td>
+                  <td><center><i class="icon-pencil"></i><i class="icon-trash"></i></center></td>
+                </tr>
+                <?php 
+                                            }
+                               }
+                ?>
+              </tbody>
+            </table>
+            <br/>
+           </div> 
+           <!-- Modal Categorias -->
+                <div id="criaCategorias" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">Adicionar Categoria</h3>
+                  </div>
+                  <div class="alert" id="message">
+              <strong>Oh snap!</strong> Change a few things up and try submitting again.
+            </div>
+                  <div class="modal-body">
+                    <p>
+                        Titulo:<br/> <input type="text" class="tituloCat"/>
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                    <button class="btn btn-primary" id="actionAddCat">Salvar</button>
+                  </div>
+                </div>
+            <!-- Modal SubCategorias -->
+                <div id="criaSubCategorias" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">Adicionar Subcategoria</h3>
+                  </div>
+                  <div class="alert" id="message">
+              <strong>Oh snap!</strong> Change a few things up and try submitting again.
+            </div>
+                  <div class="modal-body">
+                    <p>
+                       Selecione a categoria:<br/>
+                        <select class="categoriaId">
+                        <?php 
+                               foreach($this->data as $data)
+                               {
+                               	?>
+                                <option value="<?=$data->getIdcategorias()?>"><?=$data->getNome()?></option>
+                                <?php 
+                               }
+                            ?>
+                        </select></br>
+                        Titulo:<br/> <input type="text" class="tituloSubCat"/>
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                    <button class="btn btn-primary" id="actionAddSubCat">Salvar</button>
+                  </div>
+                </div>    
+             <!-- Modal Referencias -->
+                <div id="criaReferencias" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">Adicionar Referencias</h3>
+                  </div>
+                  <div class="alert" id="message">
+              <strong>Oh snap!</strong> Change a few things up and try submitting again.
+            </div>
+                  <div class="modal-body">
+                    <p>
+                        Titulo:<br/> <input type="text" class="tituloReferencia"/>
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                    <button class="btn btn-primary" id="actionAddReferencia">Salvar</button>
+                  </div>
+                </div>
+            <h5>Detalhe de cadastramento de categorias:</h5>
+            <ul class="nav nav-list tree">
+                           <?php 
+                               foreach($this->data as $data)
+                               {
+                               	?>
+                               	<li><label class="tree-toggler nav-header"><i class="icon-th"></i><?=$data->getNome()?></label>
+                                <ul class="nav nav-list tree">
+                                        <?php 
+                                            foreach($data->getSubcategorias() AS $Subcategorias)
+                                            {
+                                        ?>
+                                    <li><a href="#"><i class="icon-arrow-right"></i><?=$Subcategorias->getNome()?></a></li>
+                                    <?php 
+                                            }
+                                    ?>
+                                </ul>
+                                </li>
+                                 <li class="divider"></li>
+                               	<?php
+                               }
+                           ?>
+                           
+          </ul>  
+          <br/>
+         <span class="label label-success"><i class="icon-th"></i>Categorias</span><br/>
+         <span class="label label-info"><i class="icon-arrow-right"></i>Subcategorias</span>

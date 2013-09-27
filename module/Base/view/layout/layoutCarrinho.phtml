@@ -1,0 +1,62 @@
+<?php
+if (count($this->carrinhoLista['listaAtual']) > 0) {
+?>
+<ul class="header_conteudo_compra">
+	<li class="header_tt_box_produto">
+		<p class="header_txt_produto_compra">Produto</p>
+	</li>
+	<li class="header_tt_box_preco">
+		<p class="header_txt_preco_compra">Preços (R$)</p>
+	</li>
+	<li class="header_tt_box_Qtd">
+		<p class="header_txt_Qtd_compra">Qtde.</p>
+	</li>
+</ul>
+
+<ul id="DescricaoPrecoQuatidade">
+	<!--PRODUTOS NA CESTA-->
+    <?php
+    foreach ($this->carrinhoLista['listaAtual'] as $produto) {
+    ?>
+        <li class="BoxProdutosCesta">
+    		<div id="BoxDescricaoFoto">
+    			<span class="imagem_produto_cesta"> 
+    			    <a href="#"><img src="<?=$this->basePath()?>/images/produtos/thumb/<?=$produto['produto']->getFoto();?>"></a>
+    			</span> 
+    			<a href="<?php echo $this->url('publico-categoria/publico-categoria-e-subcategoria/publico-produto', array('categoriaslug'=>$produto['produto']->getProdutosubcategoria()->getCategorias()->getSlug(), 'subcategoriaslugSub'=>$produto['produto']->getProdutosubcategoria()->getSlugSubcategoria(), 'produtoSlug'=>$produto['produto']->getSlugProduto() )); ?>">
+    			    <p class="descricao_produto_cesta"><?=$produto['produto']->getTitulo()?> - 500g</p>
+   			    </a>
+    		</div>
+    		<div id="BoxDescricaoPreco">
+    			<p class="descricao_preco_cesta" title="#"><?=$produto['produto']->getValor(true)?></p>
+    		</div>
+    		<div id="BoxDescricaoQuatidade">
+    			<p class="descricao_Qtd_cesta" title="#"><?=$produto['quantidade']?></p>
+    		</div>
+    	</li>
+    <?php
+    }
+    ?>   
+    <!--FIM DOS PRODUTOS NA CESTA-->
+</ul>
+<ul id="buttonCarrinho">
+	<li class="ButtonCarrinhoDeCompra"><a href="<?=$this->url("publico-carrinho-compra")?>" title="#">Carrinho de compras</a></li>
+	<li class="ButtonFinalizarCompra"><a href="<?=$this->url("publico-finaliza-compra")?>" title="#">Finalizar Compra</a></li>
+</ul>
+<?php
+}
+else
+{
+?>
+
+    <div id="CestaSemProduto">
+        <img class="ImgCestaSemProduto" src="<?=$this->basePath()?>/images/cestaVazia.png">
+        <p class="tt_CestaSemProduto">Sua cesta de compras esta vazia.</p>
+        <p class="txt_CestaSemProduto">Você ainda não adicionou nenhum produto ao seu carrinho de compras.Navegue pelo site e selecione os produtos desejados.</p>
+        <a href="#"><span class="ButtonCestaVazia" style="margin-left:68px" title="continuar comprando">CONTINUAR COMPRANDO</span></a>
+    </div>
+                        
+<?php	
+}
+?>
+

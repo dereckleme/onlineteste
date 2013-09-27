@@ -1,0 +1,321 @@
+<div id="conteudo_central">
+    	<div id="box_detalhe">
+    	
+    		<h3 class="Nome_detalhe"><?=$this->detalheProduto->getTitulo()?></h3>
+
+    		<div id="galeria_detalhe">
+            <!-- <div class="zoomWrapper" style="height:274px;width:411px;"> -->
+               <div id="zoom_galeria" >
+                    <center>
+					    <img id="zoom_03" class="fotos_galeria"  data-zoom-image="<?=$this->basePath()?>/images/produtos/large/<?=$this->detalheProduto->getFoto();?>" src="<?=$this->basePath()?>/images/produtos/small/<?=$this->detalheProduto->getFoto();?>">
+				    </center>
+				<!-- </div> -->
+                </div>
+				<div id="gallery_01" style="width:212px;float:left; margin-top:20px;">					
+					<a class="elevatezoom-gallery" data-zoom-image="<?=$this->basePath()?>/images/produtos/large/<?=$this->detalheProduto->getFoto();?>" data-image="<?=$this->basePath()?>/images/produtos/small/<?=$this->detalheProduto->getFoto();?>" href="tester">
+						<img  src="<?=$this->basePath()?>/images/produtos/thumb/<?=$this->detalheProduto->getFoto();?>" class="thumb_produtos">
+					</a>
+					<?php foreach ($this->detalheProduto->getImagens() as $imagem): ?>
+					    <a class="elevatezoom-gallery" data-zoom-image="<?=$this->basePath()?>/images/produtos/large/<?=$imagem->getImages();?>" data-image="<?=$this->basePath()?>/images/produtos/small/<?=$imagem->getImages();?>" href="#">
+						    <img  src="<?=$this->basePath()?>/images/produtos/thumb/<?=$imagem->getImages();?>" class="thumb_produtos">
+					    </a>
+					<?php endforeach; ?>
+				</div>
+			</div>
+
+
+
+			<div id="comprar_detalhe">
+
+				<!--  <strike class="precoAntigo_produto">R$ 7,50</strike>-->
+				<p class="precoProduto_detalhe">
+					<em class="un_monetaria">
+					<strong><?=$this->detalheProduto->getValor(true)?></strong></em> 
+				</p>
+				<?
+    								        if($this->detalheProduto->getEstoque()[0]->getQuantidade() == 1)
+    								        {
+    								            ?>
+    								            <div class="smsEstoque" style="display:block;color:red">Limite maximo estoque!</div>
+    								            <?
+    								        }
+    								        else
+    								        {
+    								        	?>
+    								        	<div class="smsEstoque" style="display:none;color:red"></div>
+    								        	<?
+    								        }
+    								        ?>
+                <?
+                                    if($this->detalheProduto->getEstoque()[0]->getQuantidade() != 0)
+                                    {
+                                ?>
+				<div class="qtd_produto">
+					<p class="text_qtd">Quantidade</p>
+					<input id="produto_<?=$this->detalheProduto->getIdproduto()?>" disabled class="box_qtd" type="text" name="quantidade" value="1" style="background-color:#fff">
+					<ul class="produto_quantidade">
+						<li class="qtd_mudar qtMais">
+							<a href="#">mais</a>
+						</li>
+						<li class="qtd_mudar qtMenos">
+							<a href="#">menos</a>
+						</li>
+
+					</ul>
+				</div>
+                                
+				<div class="btn_detalhe">
+					<button class="btn_carrinhoCompras_detalhe actionAddCarrinho" rev="<?=$this->detalheProduto->getIdproduto()?>">Adicionar ao <br /> carrinho de compras</button>
+					<a href="<?=$this->url("publico-carrinho-compra")?>" rev="<?=$this->detalheProduto->getIdproduto()?>" class="btn_comprar_detalhe">Comprar</a>
+				</div>
+                               <?php 
+                      			    
+                                    }
+                                    else
+                                    {
+                                    	?>
+                          <div class="qtd_produto">
+							<p class="text_qtd">Quantidade</p>
+							<input id="produto_<?=$this->detalheProduto->getIdproduto()?>" disabled class="box_qtd" type="text" name="quantidade" value="0">
+					      <ul class="produto_quantidade">
+							<li class="qtd_mudar qtMais">
+								<a href="#">mais</a>
+							</li>
+							<li class="qtd_mudar qtMenos">
+								<a href="#">menos</a>
+							</li>
+					      </ul>
+				         </div>
+				         
+							<div class="btn_detalhe">
+								<button class="btn_carrinhoCompras_detalhe_off actionAddCarrinho" rev="<?=$this->detalheProduto->getIdproduto()?>">Produto indisponível</button>
+							</div>          	
+                                    	<?php 
+                                   
+                                    }
+                      			?> 
+			</div>
+           
+			
+			<div class="informacoes_produtos">
+				 <span class="mouse_imagem">passe o mouse na imagem</span>
+				<h4 class="inf_produtos">Informações sobre o produto</h4>
+				<p class="ingredientes">Ingredientes:</p>
+				<p class="ingredientes_inf">Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI.<br/> Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI. </p>
+			</div>
+
+                  <!--tabela Nutricional-->
+				<table class="tabelaNutricional" summary="layout table">
+					<thead>
+						<tr>
+						<th class="desc">Item</th>
+						<th class="qtd">Quantidade por porção</th>
+							<th class="vd">VD*</th>
+						</tr>
+					</thead>
+					    <tbody>
+							<tr>
+							<th class="desc"></th>
+							<td class="qtd">
+							Informação Nutricional
+							<br>
+							Porção de 20g
+							</td>
+							<td class="vd"></td>
+							</tr>
+
+							<tr>
+							<th class="desc">Valor Energético</th>
+							<td class="qtd">75kcal</td>
+							<td class="vd">4</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Carboidratos</th>
+							<td class="qtd">18g</td>
+							<td class="vd">6</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Fibra alimentar</th>
+							<td class="qtd">0,6g</td>
+							<td class="vd">2</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Ferro</th>
+							<td class="qtd">1,35mg</td>
+							<td class="vd">15</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Sódio</th>
+							<td class="qtd">25mg</td>
+							<td class="vd">1</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Zinco</th>
+							<td class="qtd">0,84mg</td>
+							<td class="vd">15</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Vitamina A</th>
+							<td class="qtd">75ug RE</td>
+							<td class="vd">15</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Vitamina H</th>
+							<td class="qtd">3ug</td>
+							<td class="vd">15</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Vitamna D</th>
+							<td class="qtd">0,75ug</td>
+							<td class="vd">15</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Vitamina B1</th>
+							<td class="qtd">0,14mg</td>
+							<td class="vd">15</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Vitamina B2</th>
+							<td class="qtd">0,14mg</td>
+							<td class="vd">15</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Vitamina B6</th>
+							<td class="qtd">0,15mg</td>
+							<td class="vd">15</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Vitamina PP</th>
+							<td class="qtd">1,8mg</td>
+							<td class="vd">15</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Pantotenato de cálcio</th>
+							<td class="qtd">0,6mg</td>
+							<td class="vd">15</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Ácido fólico</th>
+							<td class="qtd">26,55ug</td>
+							<td class="vd">15</td>
+							</tr>
+
+							<tr>
+							<th class="desc">Vitamina B12</th>
+							<td class="qtd">0,27ug</td>
+							<td class="vd">15</td>
+							</tr>
+
+							<tr>
+							<th class="desc"></th>
+							<td class="qtd">
+							(*) Valores Diários de Referência com base em uma dieta de 2.000 calorias ou 8.400 Kj.
+							<br>
+							(**) Valor Não Estabelecido
+							<br>
+							<br>
+							</td>
+							<td class="vd"></td>
+							</tr>
+						</tbody>
+							<tfoot>
+								<tr>
+								<td colspan="3">
+								<p class="obsTxt"></p>
+								</td>
+								</tr>
+							</tfoot>
+				    </table>
+                  <!--Fim da Tabela Nutricional-->
+    	</div>	
+    </div>
+
+    <!--box mais produtos-->
+<div id="VejaTambem">
+	<h2><span class="tt_top_list_right">VEJA TAMBÉM</span></h2>
+    <div id="box_vejaTambem">
+    <?php 
+        foreach($this->produtosRelacionados AS $relacionados)
+        {
+    ?>
+
+    	<div class="box_vejaTambem">
+		    	<p class="desc_prod">
+		    	    <a class="desc_prod" href="<?php echo $this->url('publico-categoria/publico-categoria-e-subcategoria/publico-produto', array('categoriaslug'=>$relacionados->getProdutosubcategoria()->getCategorias()->getSlug(), 'subcategoriaslugSub'=>$relacionados->getProdutosubcategoria()->getSlugSubcategoria(), 'produtoSlug'=>$relacionados->getSlugProduto() ));?>" title="<?=$relacionados->getTitulo();?>">
+		    	        <?=$relacionados->getTitulo();?>
+		    	    </a>
+		    	</p>
+		    	<div class="left_vejaTambem">
+		    		<img src="<?=$this->basePath()?>/images/produtos/thumb_small/<?php echo $relacionados->getFoto();?>" alt="" title=""  class="maisProd" />
+		    	</div>
+
+		    	<div class="right_vejaTambem">
+		    		    <strike class="precoAntigo_produto">R$ 7,50</strike>
+						<p class="precoProduto_VejaTambem">
+							<em class="un_monetaria"><strong><?=$relacionados->getValor(true)?></strong></em> 
+							
+						</p>
+
+						<div class="qtd_produto qtd_VejaTambem">
+							
+							<input id="relacionadoProd_<?=$relacionados->getIdproduto()?>" class="box_qtd" type="text" name="quantidade1" value="1">
+							<ul class="produto_quantidade">
+								<li class="qtd_mudar qtMais">
+									<a href="#">mais</a>
+								</li>
+								<li class="qtd_mudar qtMenos">
+									<a href="#">menos</a>
+								</li>
+
+							</ul>
+						</div>
+			   </div>
+			   <button class="btn_carrinhoCompras_vejaTambem  actionAddCarrinho" rev="<?=$relacionados->getIdproduto()?>">Adicionar ao carrinho de compras</button>
+			   <a href="#" class="btn_comprar_vejaTambem">Comprar</a>
+		</div>
+<?php 
+    
+        }
+?>
+
+		
+   </div>
+</div>
+<script src='<?=$this->basePath()?>/js/elevatezoom/jquery.elevatezoom.js'></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+	$("#zoom_03").elevateZoom({
+		gallery:'gallery_01', 		
+		galleryActiveClass: "active",
+		cursor: 'pointer', 			
+		loadingIcon: "spinner.gif"
+	}); 
+
+	$("#zoom_03").bind("click", function(e) {  
+	  var ez =   $('#zoom_03').data('elevateZoom');
+	  ez.closeAll(); //NEW: This function force hides the lens, tint and window	
+		$.fancybox(ez.getGalleryList());
+	  return false;
+	});
+
+}); 
+
+</script>
+
+
+

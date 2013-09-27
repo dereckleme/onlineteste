@@ -1,0 +1,130 @@
+<?php #echo $this->mensagem; nao apagar vs_anterior ?>
+<div class="alert">  
+  <strong><h4>Adicionando Produtos</h4></strong> <br/> Nessa sessão você pode adicionar seus produtos de acordo com as suas necessidades.
+</div>
+
+<div class="row">
+    <div class="span12">
+        <h3>Adicionar um novo produto</h3>
+    </div>
+</div>
+
+<hr/>
+
+<div class="row">
+    <div class="span9">
+        <?php 
+        $form = $this->form;
+        $form->setAttribute('action', $this->url('admin-produto-home/admin-produto-adicionar', array('action'=>'criarProduto')));
+        $form->prepare();
+        echo $this->form()->openTag($form);
+        ?>
+            <div class="control-group">
+                <label class="control-label" for="inputCategoria">Categoria</label>
+                <div class="controls">                  
+                    <?php echo $this->formRow($form->get('inputCategoria')); ?>
+                </div>
+            </div><!-- campo categoria -->
+    
+            <div class="control-group">
+                <label class="control-label" for="inputSubCategoria">Sub Categoria</label>
+                <div class="controls">
+                    <?php echo $this->formRow($form->get('inputSubCategoria')); ?>
+                </div>
+            </div><!-- campo subcategoria -->
+            
+            <div class="control-group">
+                <label class="control-label" for="inputTitulo">Titulo</label>
+                <div class="controls">                    
+                    <?php echo $this->formRow($form->get('titulo')); ?>
+                </div>
+            </div><!-- campo do titulo -->
+            
+            <div class="control-group">
+                <label class="control-label" for="inputValor">Valor</label>
+                <div class="controls">                    
+                    <?php echo $this->formRow($form->get('valor')); ?>
+                </div>
+            </div><!-- campo do valor -->
+            
+            <div class="control-group">
+                <label class="control-label" for="inputDestaque">Destaque</label>
+                <div class="controls">
+                    <label class="radio inline">
+                        <input type="radio" id="optionsRadios1" value="1" name="destaque"> Sim
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" id="optionsRadios2" value="0" name="destaque" checked="checked"> Não
+                    </label>
+                </div>
+            </div><!-- campo destaque -->
+            
+            <div class="control-group">
+                <label class="control-label" for="inputPeso">Peso</label>
+                <div class="controls">                    
+                    <?php echo $this->formRow($form->get('peso')); ?>
+                </div>
+            </div><!-- campo peso -->
+            
+            <div class="control-group">
+                <label class="control-label" for="inputPeso">Medidas do Produto</label>
+                <div class="controls">
+                    <label class="control-label inline"  style="width: 350px; text-align: left;">
+                        <?php echo $this->formRow($form->get('comprimento')); ?>
+                        <span class="label">Comprimento</span>
+                        <span class="label label-important">Mínimo 16cm</span>
+                    </label>
+                </div>
+            </div><!-- campo comprimento -->
+            
+            <div class="control-group">
+                <div class="controls">
+                    <label class="control-label inline"  style="width: 350px; text-align: left;">
+                        <?php echo $this->formRow($form->get('altura')); ?>
+                        <span class="label">Altura</span>
+                        <span class="label label-important">Mínimo 11cm</span>
+                    </label>
+                </div>
+            </div><!-- campo altura -->
+            
+            <div class="control-group">
+                <div class="controls">
+                    <label class="control-label inline"  style="width: 350px; text-align: left;">
+                        <?php echo $this->formRow($form->get('largura')); ?>
+                        <span class="label">Largura</span>
+                        <span class="label label-important">Mínimo 2cm</span>
+                    </label>
+                </div>
+            </div><!-- campo largura -->
+            
+            <div class="control-group">
+                <label class="control-label" for="quantidade">Quantidade do produto</label>
+                <div class="controls">                    
+                    <?php echo $this->formRow($form->get('quantidade')); ?>
+                </div>
+            </div><!-- campo qtd -->
+            
+            <div class="control-group">
+                <label class="control-label" for="inputFoto">Foto</label>                              
+                <div class="controls">
+                    <div class="fileupload fileupload-new" data-provides="fileupload">
+                        <span class="btn btn-file">
+                            <span class="fileupload-new">Selecione o arquivo</span>
+                            <span class="fileupload-exists">Alterar o arquivo</span>
+                            <!-- <input type="file" /> -->
+                            <?php echo $this->formRow($form->get('foto')); ?>
+                        </span>                        
+                    </div>
+                </div>
+            </div><!-- campo foto -->
+            
+            <div class="control-group">
+                <div class="controls">
+                    <a href="<?php echo $this->url('admin-produto-home'); ?>" title="Voltar" class="btn">Voltar</a>
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                </div>
+            </div>
+            <?php echo $this->formRow($form->get('ativo'));?>
+        <?php echo $this->form()->closeTag(); ?>
+    </div>
+</div>

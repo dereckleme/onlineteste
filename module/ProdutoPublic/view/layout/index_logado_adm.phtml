@@ -1,0 +1,66 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                       # ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/style.css')
+                       ->prependStylesheet($this->basePath() . '/css/bootstrap.css') ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+                                      ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+
+    </head>
+    
+    <body>
+        <div class="navbar" style="margin-bottom:0px;">    
+        		
+		    <div class="navbar-inner">		    	
+		        <div class="container">		        	
+		          	<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		            	<span class="icon-bar"></span>
+		            	<span class="icon-bar"></span>
+		            	<span class="icon-bar"></span>
+		          	</button>
+		          	<a class="brand" href="<?=$this->basePath()?>">Loja Seleto</a>
+		          	
+		          	<div class="nav-collapse collapse">
+		          	
+		            	<ul class="nav">
+		              		<li ><a href="<?php echo $this->url('admin-produto-categoria'); ?>">Categorias</a></li>	   
+		              		<li ><a href="<?php echo $this->url('admin-produto-home'); ?>">Produtos</a></li>	              		
+		              		
+		            	</ul>		
+		            	 
+						</div>    	
+		            	<div class="btn-group pull-right">
+							<button type="button" class="btn btn-primary">Sair</button>
+						</div>
+		          	</div><!--/.nav-collapse -->
+		          <div class="alert alert-success">
+      Seja bem vindo <?=ucwords($this->infoUser->getLogin())?>, ultimo acesso: 10/10/2010 as 10:50:10, dúvidas entre em contato.
+</div>
+		        </div>
+		     </div>
+    	</div>
+    <div id="header">
+		<div id="mn_topo">
+			<ul class="mn_topo">
+				<li class="Menu_topo"><a href="">Olá <?=$this->infoUser->getLogin()?>, seja bem vindo a Loja Seleto</a></li>
+				<li class="Menu_topo"><a href="<?php print $this->url("Usuario/UsuarioAction",array("controller"=>"Login","action" => "logout"))?>">Sair</a></li>
+                <li class="Menu_topo" style="background:none;"><a href="">Acompanhe seus pedidos</a></li>
+			</ul>
+		</div>
+
+	</div>
+        <?php echo $this->content; ?>
+    </body>
+</html>

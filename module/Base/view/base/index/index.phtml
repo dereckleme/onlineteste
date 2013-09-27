@@ -1,0 +1,85 @@
+ 
+
+                <!--**********************CONTEUDO CENTRAL**********************-->
+
+                  <div id="conteudo_central">
+
+                    <div id="container_home">
+                      <h3 class="ProdutoDestaque">Produtos em destaque</h3>
+                        <ul id="box_produto">
+                            <?php $i=count($this->prodDestaques); foreach($this->prodDestaques as $destaque): ?>
+								<?php if($i <= 2):?>
+                
+								  <li id="produto" <?php echo ($i == 0) ? "style='border:none'" : ""; ?>>
+									  <a href="<?php echo $this->url('publico-categoria/publico-categoria-e-subcategoria/publico-produto', array('categoriaslug'=>$destaque->getProdutosubcategoria()->getCategorias()->getSlug(), 'subcategoriaslugSub'=>$destaque->getProdutosubcategoria()->getSlugSubcategoria(), 'produtoSlug'=>$destaque->getSlugProduto())); ?>">
+										  <p class="txt_produto"><?php echo $destaque->getTitulo(); ?></p>
+									  </a>
+									  <a class="ImgProdutoHome" href="#">
+										  <img src="<?=$this->basePath()?>/images/produtos/small/<?php echo $destaque->getFoto();?>" class="imgProdutos_home" alt="<?php echo $destaque->getSlugProduto(); ?>" title="<?php echo $destaque->getTitulo(); ?>">
+									  </a>
+									  <a href="javascript:void(0)">
+										  <p class="txt_valor"><?php echo $destaque->getValor(true); ?></p>
+									  </a>
+									  <a href="<?php echo $this->url('publico-categoria/publico-categoria-e-subcategoria/publico-produto', array('categoriaslug'=>$destaque->getProdutosubcategoria()->getCategorias()->getSlug(), 'subcategoriaslugSub'=>$destaque->getProdutosubcategoria()->getSlugSubcategoria(), 'produtoSlug'=>$destaque->getSlugProduto())); ?>">
+										  <span class="comprar" title="mais detalhes" alt="comprar">mais detalhes</span>
+									  </a>
+								  </li>
+
+								<?php endif; ?>
+							<?php $i--; endforeach; ?>
+                        </ul>
+                    </div>
+
+                  <div id="container_home">
+                    <h3 class="ProdutoVisitados">Produtos mais visitados</h3>
+                      <ul id="box_produto">
+                        <?php $i=count($this->prodVisistados); foreach($this->prodVisistados as $visitado): ?>
+                         <li id="produto" <?php echo ($i == 1) ? "style='border:none'" : ""; ?>>
+                             <a href="<?php echo $this->url('publico-categoria/publico-categoria-e-subcategoria/publico-produto', array('categoriaslug'=>$visitado->getProdutosubcategoria()->getCategorias()->getSlug(), 'subcategoriaslugSub'=>$visitado->getProdutosubcategoria()->getSlugSubcategoria(), 'produtoSlug'=>$visitado->getSlugProduto() ) ); ?>">
+                                 <p class="txt_produto"><?php echo $visitado->getTitulo(); ?></p>
+                             </a>
+                             <a class="ImgProdutoHome" href="javascript:void(0)"> <img src="<?=$this->basePath()?>/images/produtos/small/<?php echo $visitado->getFoto();?>" class="imgProdutos_home" alt="<?php echo $visitado->getSlugProduto(); ?>" title="<?php echo $visitado->getTitulo(); ?>"> </a>
+                             <a href="javascript:void(0)"> <p class="txt_valor"><?php echo  $visitado->getValor(true); ?></p> </a>
+                             <a href="<?php echo $this->url('publico-categoria/publico-categoria-e-subcategoria/publico-produto', array('categoriaslug'=>$visitado->getProdutosubcategoria()->getCategorias()->getSlug(), 'subcategoriaslugSub'=>$visitado->getProdutosubcategoria()->getSlugSubcategoria(), 'produtoSlug'=>$visitado->getSlugProduto() ) ); ?>">
+                                 <span class="comprar" title="mais detalhes" alt="comprar">mais detalhes</span>
+                             </a>
+                         </li>
+						<?php $i--; endforeach; ?>
+                      </ul>
+                    </div>
+                </div>
+
+                <!--*********************FIM DO CONTEUDO CENTRAL***********************-->
+
+
+                <!--*****************MENU LATERAL PUBLICIDADE**********************-->
+
+                  <div id="publicidade">
+
+                    <div id="cadastro">
+                      <p class="tt_form">Receba ofertas e descontos exclusivos</p>
+                        <form id="form" method="post" action="">
+                          <input type="text" class="statusNome" name="nome" placeholder="Digite seu nome" />
+                            <br class="clear" /> 
+                              <input type="email" class="statusEmail" name="email" placeholder="Digite seu e-mail" /> <br class="clear" /> 
+                              <button id="btnEnviar" type="submit" class="cadastrar" title="Enviar">CADASTRAR</button>
+                        </form>
+                    </div>
+
+                      <style type="text/css">
+                        
+                      </style>
+                      <div id="face">
+                        <div id="fb-root"></div>
+                          <script>(function(d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (d.getElementById(id)) return;
+                            js = d.createElement(s); js.id = id;
+                            js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1";
+                            fjs.parentNode.insertBefore(js, fjs);
+                          }(document, 'script', 'facebook-jssdk'));
+                          </script>
+                          <div class="fb-like-box" data-href="https://www.facebook.com/SeletoAlimentos?ref=ts&amp;fref=ts" data-width="198" data-height="300" data-show-faces="true" data-header="true" data-stream="false" data-show-border="false">
+                          </div>
+                      </div>
+                  </div>

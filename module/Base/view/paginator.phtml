@@ -1,0 +1,43 @@
+<?php if ($this->pageCount): ?>
+<ul class="box_paginacao" style="width: 187px !important;">
+    <!-- Previous page link -->
+    <?php if (isset($this->previous)): ?>
+    <li class="seta_paginacao">
+        <a href="?page=<?php echo $this->previous; ?>">
+            <img class="st_esq" src="<?=$this->basePath()?>/images/seta_dir2_paginacao.png">
+        </a>
+    </li>
+    <?php else: ?>
+    <li class="seta_paginacao">
+        <img class="st_esq" src="<?=$this->basePath()?>/images/seta_esq_paginacao.png">
+    </li>
+    <?php endif; ?>
+    
+    <?php /*foreach($this->pagesInRange as $item): ?>
+        
+        <?php if($this->current == $item): ?>            
+            <li><span class="box_numeral_ligado"><?php echo $item; ?></span></li>        
+        <?php else: ?>
+            <li><a class="box_numeral" href="<?php echo $formatUrl($item); ?>"><?php echo $item; ?></a></li>
+        <?php endif;?>
+        
+    <?php endforeach; */?>
+    
+    <li><span class="box_numeral_ligado"><?php  echo $this->lastItemNumber; ?> de <?php echo $this->totalItemCount; ?> páginas</span></li>
+    
+    
+    
+    <!-- Last page link -->
+    <?php if (isset($this->next)): ?>
+    <li class="seta_paginacao">
+        <a href="?page=<?php echo $this->next; ?>">
+            <img class="st_dir" src="<?=$this->basePath()?>/images/seta_dir_paginacao.png">
+        </a>
+    </li>
+    <?php else: ?>
+    <li class="seta_paginacao">
+        <img class="st_dir" src="<?=$this->basePath()?>/images/seta_esq2_paginacao.png">
+    </li>
+    <?php endif; ?>
+</ul>
+<?php endif; ?>

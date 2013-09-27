@@ -1,0 +1,144 @@
+<!--PAGINA DE DETALHES DO PEDIDOS FINAL-->
+    <?php 
+$filter = new \NumberFormatter('pt_BR', \NumberFormatter::CURRENCY);
+?>     
+		<div id="PageRequests">
+				<h3 class="tt_PageRequests">Meus Pedidos</h3>
+				<div id="BoxPageRequests">
+					<div id="ContainerPageRequests">
+						<div id="NumberPageRequests"><p class="txt_NumberPageRequests">Compra número <span class="DetalhePageRequests"><?=$this->data->getIdcontrolerecibo()?></span></p></div>
+                       <!--COLUNA ESQUERDA-->
+					<div id="BoxEsquerdo">
+						<div id="ContBoxEsquerdo">
+							<!--DADOS DO CLIENTE-->
+							<div id="tt_BoxEsquerdo">
+								<p class="tt_PageRequests">endereço de envio</p>
+							</div>
+							<div id="cont_BoxEsquerdo">
+								<p class="cont_BoxEsquerdo"><span class="NomeBoxEsquerdo">Aline dos Santos</span><br/>
+								Rua Professor Dias Castejon,77<br/>
+								Jardim Monte Kemel<br/>
+								Cep:05633-050<br/>
+								São Paulo<br/>
+								São Paulo</p>
+							</div>
+							<!--FORMA DE PAGAMENTO-->
+							<div id="tt_BoxEsquerdo">
+								<p class="tt_PageRequests">Forma de pagamento</p>
+							</div>
+							<div id="cont_BoxEsquerdo">
+								<span class="PagBoxEsquerdo"><?php 
+							    if(!$this->data->getSpagamento())
+							    {
+							?>
+								    <a target="_blank" href="https://pagseguro.uol.com.br/v2/checkout/payment.html?code=<?=$this->data->getNpedido()?>" title="Pague Agora"><img class="Txt_PagueAgora" src="<?=$this->basepath()?>/images/PagueAgora.png"></a>
+								
+								<?php 
+							    }else {
+                                ?>
+                                    <?=$this->data->getSpagamento()->getTitulo()?>
+                                <?							    	
+							    }
+								?></span>
+							</div>
+							<!--STATUS DE ENVIO-->
+							<div id="tt_BoxEsquerdo">
+								<p class="tt_PageRequests">Status de Envio</p>
+							</div>
+							<div id="cont_BoxEsquerdo">
+								<span class="PagBoxEsquerdo"><?if(!$this->data->getStatus()) print "Não disponível"; else print $this->data->getStatus();?></span>
+							</div>
+						</div>
+				     <a href="<?=$this->url("Painel-usuario")?>"><span class="ButtonVoltar">Voltar</span></a>
+					</div>
+					<!--FIM DA COLUNA ESQUERDA-->	
+
+							<!--COLUNA DIREITA CONTEÚDO COM AS INFORMAÇÕES DO PEDIDO-->
+						<div id="BoxDireito">
+							<div id="tt_BoxDireito">
+								<p class="tt_PageRequests">Informações do pedido</p>
+							</div>
+							
+							<ul id="ListaUmBoxDireito">
+								<li class="ListaUmBoxDireitoNome">Nome do produto</li>
+								<li class="ListaUmBoxDireito">Preço (R$)</li>
+								<li class="ListaUmBoxDireito"> Quantidade</li>
+								<li class="ListaUmBoxDireito">Subtotal (R$)</li>
+							</ul>
+
+							<!--INFORMAÇÕES DO PEDIDO-->
+
+							<ul>
+								<!--CONTEÚDO-->
+								<?php 
+								$calculSubtotal = 0;
+								    foreach($this->data->getProdutosRecibo() AS $produto)
+								    {
+								?>
+								<li class="ListaDoisBoxDireito">
+									<div id="BoxListaDois">
+										<p class="BoxListaDoisNome"><?=$produto->getProdutosproduto()->getTitulo()?></p>
+									</div> 
+									<div id="BoxListaDois">
+										<p class="BoxListaDoisPreco"><?=$produto->getProdutosproduto()->getValor(true)?></p>
+									</div> 
+									<div id="BoxListaDois">
+										<p class="BoxListaDoisQTD"><?=$produto->getQuantidade()?></p>
+									</div>
+									<div id="BoxListaDois">
+										<p class="BoxListaDoisSub"><?=$filter->formatCurrency($produto->getProdutosproduto()->getValor()*$produto->getQuantidade(), 'BRL');?></p>
+									</div> 
+								</li>
+								<?php 
+								$calculSubtotal = $calculSubtotal+$produto->getProdutosproduto()->getValor()*$produto->getQuantidade();
+								    }
+								?>
+								<!--FIM DO CONTEÚDO-->
+
+								<!--INFORMAÇÕES DOS VALORES-->
+
+								<!--SUBTOTAL-->
+								<li class="ListaTresBoxDireito">
+									<p class="txt_BoxDireito">Subtotal</p>
+								</li>
+								<li class="ListaQuatroBoxDireito">
+									<div id="BoxListaQuatro">
+										<p class="BoxListaQuatroSub"><?=$filter->formatCurrency($calculSubtotal, 'BRL');?></p>
+									</div>
+								</li>
+
+								<!--FRETE-->
+								<li class="ListaTresBoxDireito">
+									<p class="txt_BoxDireito">Frete</p>
+								</li>
+								<li class="ListaQuatroBoxDireito">
+									<div id="BoxListaQuatro">
+										<p class="BoxListaQuatroSub"><?=$filter->formatCurrency($this->data->getValorFrete(), 'BRL');?></p>
+									</div>
+								</li>
+
+								<!--TOTAL-->
+								<li class="ListaTresBoxDireito">
+									<p class="txt_BoxDireito"><span class="Total_BoxDireito">Total</span></p>
+								</li>
+								<li class="ListaQuatroBoxDireito">
+									<div id="BoxListaQuatro">
+										<p class="BoxListaQuatroSub"><span class="Total_BoxDireito"><?=$filter->formatCurrency($calculSubtotal+$this->data->getValorFrete(), 'BRL');?></span></p>
+									</div>
+								</li>
+							</ul>	
+
+
+						</div>
+
+
+						
+						<a href="#"><span class="ButtonRastrearCompra">Rastrear SUA COMPRA</span></a>
+
+
+					</div>
+				
+				</div>		
+				
+		</div>
+          <!--FIM DA PAGINA DE DETALHES DO PEDIDOS FINAL-->

@@ -1,0 +1,157 @@
+              <!--**********************CATEGORIA**********************-->
+               <div id="cont_central_produtos">
+ 
+                  <!--SELECT BOX-->
+                  	<div id="select_box">
+                      <p class="tt_select_box">Ordenar por:</p>
+                        <div class="styled-select">
+                           <form action="<?php echo $this->url('publico-busca-produto'); ?>" method="get">
+                               <input type="hidden" name="item" value="<?php echo $this->termo; ?>">
+                                <select name="ordenarPor" onchange="this.form.submit()">
+                                  <option value="">selecione</option>
+                                  <option value="alfabetica">alfabética</option>
+                                  <option value="menor_preco">menor preço</option>
+                                  <option value="maior_preco">maior preço</option>
+                               </select>
+                            </form>                               
+                        </div>
+
+                        <?php echo $this->paginationControl($this->page,'Sliding','paginator'); ?>
+                        
+                     </div>
+                  <!--FIM DO SELECT BOX-->
+                  
+                  	<ul id="box_categoria_produtos">
+                  	    <!--LISTA DE PRODUTOS DENTRO DA CATEGORIA-->
+                  	    <?php 
+                  	    foreach($this->page as $produto)
+                  	    {
+                  	       
+                  	        ?>
+                	        <li class="lista_categoria_produtos">
+                      			<div id="descricao_produto_categoria">
+                              <div id="categoria_produto_left">
+                          				<a href="">
+                          				    <img class="img_descricao_produto_categoria" src="<?=$this->basePath()?>/images/produtos/thumb_small/<?php echo $produto->getFoto();?>" title="#">
+                          				</a>
+                              </div>
+                              <div id="categoria_produto_right">
+                          				<p class="txt_descricao_produto_categoria">
+                          				    <a class="txt_descricao_produto_categoria" href="<?php echo $this->url('publico-categoria/publico-categoria-e-subcategoria/publico-produto', array('categoriaslug'=>$produto->getProdutosubcategoria()->getCategorias()->getSlug(), 'subcategoriaslugSub'=>$produto->getProdutosubcategoria()->getSlugSubcategoria(), 'produtoSlug'=>$produto->getSlugProduto() )); ?>" title="<?php echo $produto->getTitulo(); ?>">
+                          				        <?php echo $produto->getTitulo(); ?>
+                          				    </a>
+                          				</p>
+                                  <br />
+                          				
+                  								<p class="precoProduto_categoria">
+                  								    <em class="moeda_monetaria"><strong><?php echo $produto->getValor(true); ?></strong></em>
+                  								</p>
+                              </div>
+                      			</div>
+                                <?
+                                    if($produto->getEstoque()[0]->getQuantidade() != 0)
+                                    {
+                                ?>
+                      			<div id="quantidade_produto_categoria" class="prdQtd">
+                      				<p class="text_qtd_PC">Quantidade</p>
+    								<input id="produto_<?php echo $produto->getIdproduto(); ?>" class="box_qtd_PC" disabled type="text" name="quantidade" value="1" style="background-color:#fff">    
+    								        
+    								<ul class="produto_quantidade">
+    								    <li class="qtd_mudar_PC qtMais_PC"> <a href="#">mais</a> </li>
+                                        <li class="qtd_mudar_PC qtMenos_PC"> <a href="#">menos</a> </li>            									     
+    								</ul>
+    								<br/>
+    								    
+    								<p class="text_qtd_PC smsEstoque" style="font-size:11px;color:red"><?
+    								        if($produto->getEstoque()[0]->getQuantidade() == 1)
+    								        {
+    								          print "Limite maximo estoque!";
+    								        }
+    								        ?></p>
+                      			</div>
+                      			
+                      			            
+                      			<div id="buttom_add_car_comprar">
+    						      <button class="carrinhoCompras_categoria actionAddCarrinho" title="Adicionar ao carrinho de compras"  rev="<?php echo $produto->getIdproduto();?>">Adicionar ao <br/> carrinho de compras</button>            
+                      			</div>  
+                      			<?php 
+                      			    
+                                    }
+                                    else
+                                    {
+                                    	?>
+                          <div id="quantidade_produto_categoria" class="prdQtd">
+                      				<p class="text_qtd_PC">Quantidade</p>
+    								           <input id="produto_<?php echo $produto->getIdproduto(); ?>" disabled class="box_qtd_PC" type="text" name="quantidade" value="0" >    
+    								        
+    								          <ul class="produto_quantidade">
+      								          <li class="qtd_mudar_PC qtMais_PC"> <a href="#">mais</a> </li>
+                                <li class="qtd_mudar_PC qtMenos_PC"> <a href="#">menos</a> </li>
+    								         </ul><br/>
+    								           <p class="text_qtd_PC smsEstoque" style="font-size:11px;color:red"></p>
+                      		</div>
+                      			
+                      		<div id="buttom_add_car_comprar">
+    						            <button class="carrinhoCompras_categoria_off actionAddCarrinho" title="Produto indisponível" rev="<?php echo $produto->getIdproduto();?>">Produto indisponível</button>            
+                      		</div>    	
+                                    	<?php 
+                                   
+                                    }
+                      			?>          
+                      		</li>                        	        
+                	        <?php
+                  	    }
+                  	    ?>
+                  	    
+                  	    <!--FIM DA LISTA DE PRODUTOS DENTRO DA CATEGORIA-->                  	    
+                  	</ul>
+                  	
+                    <!--SELECT BOX-->
+                    <div id="select_box">
+                        <p class="tt_select_box">Ordenar por:</p>
+                        <div class="styled-select">
+                            <form action="<?php echo $this->url('publico-busca-produto'); ?>" method="get">
+                                <input type="hidden" name="item" value="<?php echo $this->termo; ?>">
+                                <select name="ordenarPor" onchange="this.form.submit()">
+                                    <option value="">selecione</option>
+                                    <option value="alfabetica">alfabética</option>
+                                    <option value="menor_preco">menor preço</option>
+                                    <option value="maior_preco">maior preço</option>
+                                </select>
+                            </form>
+                        </div>
+
+                        <?php echo $this->paginationControl($this->page,'Sliding','paginator'); ?>
+                        
+                     </div>
+                  <!--FIM DO SELECT BOX-->
+          </div>
+          <!--*********************FIM DOA CATEGORIA***********************-->
+
+
+<!--*****************MENU LATERAL PUBLICIDADE**********************-->
+<div id="publicidade">
+    <div id="cadastro">
+        <p class="tt_form">Receba ofertas e descontos exclusivos</p>
+        <form id="form" method="post" action="">
+            <input type="text" class="statusNome" name="nome" placeholder="Digite seu nome" />
+            <br class="clear" /> 
+            <input type="email" class="statusEmail" name="email" placeholder="Digite seu e-mail" /> 
+            <br class="clear" /> 
+            <button id="btnEnviar" type="submit" class="cadastrar" title="Enviar">CADASTRAR</button>
+        </form>
+    </div>
+
+    <div id="face">
+        <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1";
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <div class="fb-like-box" data-href="https://www.facebook.com/SeletoAlimentos?ref=ts&amp;fref=ts" data-width="198" data-height="300" data-show-faces="true" data-header="true" data-stream="false" data-show-border="false"></div>
+    </div>
+</div>

@@ -1,0 +1,161 @@
+<div class="alert">  
+  <strong><h4>Gerenciamento de Produtos</h4></strong> <br/> Nessa sessão você pode gerenciar seus produtos de acordo com as suas necessidades.
+</div>
+
+<div class="row">
+    <div class="span8">
+        <!-- Button to trigger modal -->
+        <a href="#addProdutos" role="button" class="btn" data-toggle="modal" title="Novo Produto" style="float: left"><i class="icon-plus-sign"></i> Novo Produto</a> 
+        <div class="btn-group" style="float: left; margin-left: 10px;">
+            <a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#">
+                Buscar por Categoria
+                <span class="caret"></span>
+            </a>                    
+            <ul class="dropdown-menu">
+                <li><a href="<?php echo $this->url('admin-produto-home'); ?>">Todos</a></li>
+                <?php foreach($this->categorias as $categoria): ?>
+                <li <?php echo ($this->catActive == $categoria->getSlug())?"class='active'":""; ?>><a href="<?php echo $this->url('admin-produto-home/admin-categorias-default', array('slug'=>$categoria->getSlug())); ?>"><?php echo $categoria->getNome(); ?></a></li>
+                <?php endforeach; ?>                
+            </ul>
+        </div>        
+        <div class="btn-group"  style="float:left; margin-left: 10px;">
+            <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+                Buscar por Sub Categoria
+                <span class="caret"></span>
+            </a>                    
+            <ul class="dropdown-menu">
+                <li class="active"><a href="<?php echo $this->url('admin-produto-home'); ?>">Todos</a></li>
+                <?php // subcategorias
+                foreach($this->dataCategorias as $categoria)
+                {                    
+                	foreach($categoria->getSubcategorias() as $subcategoria)
+                    {                        
+                    ?>
+                    <li><a href="<?php echo $this->url('admin-produto-home/admin-categorias-default/admin-categorias-e-subcategoria', array('action'=>'categorias', 'slug'=>$categoria->getSlug(), 'slugSub'=>$subcategoria->getSlugSubcategoria())); ?>"><?php echo $subcategoria->getNome(); ?></a></li>
+                    <?php
+                    }
+                }
+                ?>
+            </ul>
+        </div>       
+    </div>    
+    <div class="span4">
+        <form class="form-search">
+            <div class="input-append">
+    		    <input type="text" class="input-medium search-query">
+    		    <button type="submit" class="btn">Busca</button>
+		    </div>
+		</form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="addProdutos" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    	<h3 id="myModalLabel">Adicionar Produto</h3>
+  	</div>
+  	<div class="modal-body">    	
+    	<div class="control-group">
+			<div class="alert" id="message"></div>				
+		</div>    		
+		<?php 
+		$form = $this->form;
+		$form->setAttribute('action', "#");
+		$form->prepare();
+		echo $this->form()->openTag($form);
+		?>
+			<div class="control-group">
+				<label class="control-label" for="inputCategoria">Categoria</label>
+				<div class="controls">
+					<?php echo $this->formRow($form->get('inputCategoria')); ?>
+				</div>				
+			</div>
+			
+			<div class="control-group">
+    			<label class="control-label" for="inputSubCategoria">Sub Categoria</label>
+    			<div class="controls">
+      				<?php echo $this->formRow($form->get('inputSubCategoria')); ?>
+    			</div>
+  			</div>
+  			
+  			<div class="control-group">
+    			<label class="control-label" for="inputTitulo">Titulo</label>
+			    <div class="controls">			    
+			    	<?php echo $this->formRow($form->get('titulo')); ?>
+			    </div>
+  			</div>
+  			
+  			<div class="control-group">
+    			<label class="control-label" for="inputValor">Valor</label>
+			    <div class="controls">
+			    	<?php echo $this->formRow($form->get('valor')); ?>			    	
+			    </div>
+  			</div>
+		<?php 
+		echo $this->form()->closeTag();
+		?>		
+  	</div>
+  	<div class="modal-footer">
+    	<button class="btn" data-dismiss="modal" aria-hidden="true" id="fecharModal">Cancelar</button>
+    	<button class="btn btn-primary" id="addProduto">Criar</button>
+  	</div>
+</div>
+
+<table class="table table-striped table-bordered table-condensed">
+	<caption>
+		<h3>LISTA DE PRODUTOS DA LOJA SELETO PELA CATEGORIA "<?php echo strtoupper(str_replace("-", " ", $this->catActive)) ?>"</h3>
+	</caption>
+	<thead>
+		<tr>
+			<th>Codigo</th>
+			<th>Categoria</th>
+			<th>Sub Categoria</th>
+			<th>Titulo</th>
+			<th>Valor</th>			
+			<th>Ações</th>
+		</tr>
+	</thead>
+	<tbody>
+	    <?php 
+        foreach($this->dataCategorias as $categoria)
+        {
+        	foreach($categoria->getSubcategorias() as $subcategoria)
+        	{
+        		foreach($subcategoria->getProdutos() as $produto)
+        		{
+    			?>
+    			<tr>
+        			<td><?php echo $produto->getIdproduto(); ?></td>
+        			<td><?php echo $produto->getProdutosubcategoria()->getCategorias()->getNome(); ?></td>
+        			<td><?php echo $produto->getProdutosubcategoria()->getNome(); ?></td>
+        			<td><?php echo $produto->getTitulo(); ?></td>
+        			<td><?php echo $produto->getValor(); ?></td>			
+        			<td width="150">				
+        				<a class="btn btn-small" href="<?php echo $this->url('admin-produto-home/admin-default', array('action'=>'editar', 'id'=>$produto->getIdproduto())); ?>" title="Editar Produto">
+        					<i class="icon-edit"></i> Editar
+        				</a>
+        				<a class="btn btn-small" href="<?php echo $this->url('admin-produto-home/admin-default', array('action'=>'excluir', 'id'=>$produto->getIdproduto())); ?>" onclick="return confirm('Confima a exclusão deste Produto?');" title="Excluir Produto">
+        					<i class="icon-remove"></i> Excluir
+        				</a>				
+        			</td>
+        		</tr>
+    			<?php
+        		}
+        	}
+        }	    
+	    ?>	   
+	</tbody>
+</table>
+
+<div class="pagination pagination-centered">
+	<ul>
+    	<li class="disabled"><a href="#">Prev</a></li>
+    	<li class="active"><a href="#">1</a></li>
+    	<li><a href="#">2</a></li>
+    	<li><a href="#">3</a></li>
+    	<li><a href="#">4</a></li>
+    	<li><a href="#">5</a></li>
+    	<li><a href="#">Next</a></li>
+	</ul>
+</div>

@@ -1,0 +1,8 @@
+    <?php 
+        foreach($this->listaProdutos AS $produto)
+        {
+    ?>
+<a href="#" rev="<?=$produto->getIdproduto()?>" class="actionAddCarrinho">Adiciona Carrinho | <?=$produto->getTitulo()?> | <?=$produto->getIdproduto()?></a></br>
+<?php 
+        }
+?>

@@ -1,0 +1,92 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ?>
+        <script>var basePatch  = '<?=$this->basePath()?>'</script>
+        <!-- Scripts -->
+        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+                                      ->prependFile($this->basePath() . '/js/usuario.js')
+                                      ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+
+    </head>
+    <body>
+
+          <div id="header">
+              <div id="mn_topo">
+                  <ul class="mn_topo">
+
+                         <li class="Menu_topo" style="text-decoration:none;"><a href="">Bem vindo à nossa loja online</a></li>
+                         <li class="Menu_topo"><a href="#" class="eventOpenPopUp">Faça login ou cadastre-se</a></li>
+                         <li class="Menu_topo" style="background:none;"><a href="" href="#" class="eventOpenPopUp">Acompanhe seus pedidos</a></li>
+                  </ul>
+                </div>
+         </div>
+        
+     
+         <!--LOGIN -->
+
+         <div id="Login_Cadastro" style="display:none">
+
+
+            <div id="btn_form">
+               <a href="" class="status_entrar" alt="login" title="Login">entrar</a>
+               <a href="" class="status_criar_conta" alt="Criar conta" title="Criar conta">criar conta</a>
+               <a href="" class="status_fechar"alt="fechar" title="Fechar">fechar</a>
+           </div>
+           <div id="form_login">     
+              <form action="" class="formActionLogin">
+                   <label class="status_login">Login:</label><br/><input type="text" class="login" value="Digite seu Login"><br/>
+                   <label class="status_password">Senha:</label><br/><input type="password" class="Password" value="criar senha"><br/>
+                   <a href="" class="esqueceuSenha">Esqueceu sua senha?</a><br/>
+                   <input type="submit" value="Entrar" class="Eventlogin"><br/><br/><br/>
+                   <p class="criar_conta">Ainda não tem uma conta?<a href="" class="criar_conta"> criar uma conta</a></p>
+              </form>
+
+            
+           </div>
+
+          <div id="form_cadastro" style="display:none">
+             <form action="" class="formActionCadastro">
+                  <label class="status_email">*E-mail:</label><br/><input type="text" class="email" value="digite aqui o seu e-mail"><br/>
+                  <label class="status_login">*Login:</label><br/><input type="text" class="login" value="criar nome de usuário"><br/>
+                  <label class="status_password">*Senha:</label><br/><input type="password" class="Password" value="criar senha"><br/>
+                  <label class="status_password">*Confirmar senha:</label><br/><input type="password" class="Password" value="criar senha"><br/><br/>
+                 <input type="submit" value="cadastrar" class="Eventcadastrar"><br/><br/><br/>
+            </form>
+         </div>
+        </div>
+
+
+       <!--ERRO-->
+        <div id="form_erro" style="display:none">
+                <div id="atencao_erro" >
+                   <p class="atencaoErro">Atenção, foram encontrados alguns erros.</p>
+                   <p class="erro">Erros</p>
+                   <span class="tipo_erro"></span>
+                   <br/><br/><br/>
+                   <a href="" class="tentarNovamente">Tentar novamente</a>
+                </div>
+        </div>
+
+        <div id="content">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores, voluptates, commodi minima eius aut corporis nisi quis dolore sequi magnam ex distinctio libero at? Aliquam ut eius nisi officiis iste.
+        </div>
+
+        
+
+
+
+        <?php echo $this->content; ?>
+
+    </body>
+</html>

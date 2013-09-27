@@ -1,0 +1,210 @@
+ <?php 
+$filter = new \NumberFormatter('pt_BR', \NumberFormatter::CURRENCY);
+?>  
+<div class="alert alert-success">
+              <strong>Detalhe do pedido</strong> Nessa sessão você entra absolutamente tudo sobre o pedido processado.
+            </div>
+
+
+<style>
+/* --------------------------------------------------------------
+   TABLES
+-------------------------------------------------------------- */
+
+table.form {
+	background-color: #fff;
+	padding: 0px;
+	border: 3px solid #E2E7E9;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px;
+    border-radius: 4px;
+}
+table.form td {
+	font-size: 12px;
+}
+table.form td.fieldlabel {
+	background-color: #fff;
+    text-align: right;
+}
+table.form td.fieldarea {
+	background-color: #efefef;
+    text-align: left;
+}
+table.datatable {
+	padding: 0;
+	margin: 0;
+}
+table.datatable th {
+	background-color: #1A4D80;
+	font-weight: bold;
+	text-align: center;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+}
+table.datatable td {
+	background-color: #FFF;
+	border-bottom: 1px solid #EBEBEB;
+	font-size: 12px;
+}
+table.datatable tr.rowhighlight td {
+	background-color: #E0E8F3;
+}
+table.datatable tr:hover td {
+	background-color: #EFF2F9;
+}
+table.datatable th, table.datatable th a, table.datatable th a:visited {
+	color: #FFF;
+	text-decoration: none;
+}
+table.datatable th a:hover {
+	color: #FFF;
+	text-decoration: underline;
+}
+table.datatable tr:hover td {
+	background-color: #F3F3F3;
+}
+</style>
+ <table class="form" width="100%" border="0" cellspacing="2" cellpadding="3">
+    <tbody>
+      <tr>
+        <td class="fieldlabel">Date da Venda</td>
+
+        <td class="fieldarea"><?php print $this->data->getDtVenda()->format("d/m/Y h:m:s");?></td>
+
+        <td width="15%" class="fieldlabel">Forma de Pagamento</td>
+
+        <td class="fieldarea"><?
+								 	if($this->data->getFpagamento())
+								 	{
+								 	    print $this->data->getFpagamento()->getTitulo();
+								 	}
+								 	else
+								 	{
+								 		print "Indisponível";
+								 	}
+								 	?></td>
+      </tr>
+
+      <tr>
+        <td width="15%" class="fieldlabel">N° do Pedido</td>
+
+        <td class="fieldarea">000<?=$this->data->getIdcontrolerecibo()?></td>
+
+        <td class="fieldlabel">Valor Total</td>
+
+        <td class="fieldarea"><?=$filter->formatCurrency($this->data->getValor(), 'BRL');?></td>
+      </tr>
+
+      <tr>
+        <td class="fieldlabel" rowspan="3" valign="top">Dados do Cliente</td>
+
+        <td class="fieldarea" rowspan="3" valign="top">
+           <b> <?=$this->cadastro->getNome();?></b>,<br/>
+            <?=$this->cadastro->getRua();?><br/>
+            <?=$this->cadastro->getMapeamentocidade()->getNome();?>,<?=$this->cadastro->getMapeamentocidade()->getMapeamentoestado()->getNome();?><br/>
+            <?=$this->cadastro->getBairro()?><br/>
+           cep: <?=$this->cadastro->getCep()?>
+        </td>
+
+        <td class="fieldlabel">Situação do pagamento</td>
+
+        <td class="fieldarea"><?php 
+							    if(!$this->data->getSpagamento())
+							    {
+							?>
+								 Indisponível
+								<?php 
+							    }else {
+                                ?>
+                                    <?=$this->data->getSpagamento()->getTitulo()?>
+                                <?							    	
+							    }
+								?></td>
+      </tr>
+
+      <tr>
+        <td class="fieldlabel">Status do Envio</td>
+
+        <td class="fieldarea"><?php 
+                      $status = $this->data->getStatus();
+                  if(empty($status)) print "Indisponível"; 
+                  else  print  "Concluído";
+                  ?></td>
+      </tr>
+
+      <tr>
+        <td class="fieldlabel">Status</td>
+
+        <td class="fieldarea"><select id="ajaxchangeorderstatus" style="font-size:14px;">
+          <option style="color:#CC8100">
+            Pending
+          </option>
+
+          <option style="color:#779500" selected="selected">
+            Active
+          </option>
+
+          <option style="color:#888888">
+            Cancelled
+          </option>
+
+          <option style="color:#000000">
+            Fraud
+          </option>
+
+          <option style="color:#3E98C2">
+            Under Review
+          </option>
+
+          <option style="color:#0ED7F2">
+            Wataing Payment
+          </option>
+        </select>&nbsp;<span id="orderstatusupdated" style=
+        "display:none;padding-top:14px;"><img src="images/icons/tick.png" /></span></td>
+      </tr>
+
+      <tr>
+        <td class="fieldlabel">Valor Frete</td>
+
+        <td class="fieldarea"><?=$filter->formatCurrency($this->data->getValorFrete(), 'BRL');?></td>
+
+        <td class="fieldlabel">Affiliate</td>
+
+        <td class="fieldarea" id="affiliatefield">None - <a href="#" id=
+        "showaffassign">Manual Assign</a></td>
+      </tr>
+    </tbody>
+  </table>
+  </br>
+  <div class="alert alert-info">
+         Produtos do pedido:
+            </div>
+  <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th width="100">#Id Produto</th>
+                  <th>Titulo</th>
+                  <th>Valor</th>
+                  <th>Quantidade</th>
+                </tr>
+              </thead>
+              <tbody>
+              <?php 
+								$calculSubtotal = 0;
+								    foreach($this->data->getProdutosRecibo() AS $produto)
+								    {
+								?>
+                <tr>
+                  <td>1</td>
+                  <td><?=$produto->getProdutosproduto()->getTitulo()?></td>
+                  <td><?=$produto->getProdutosproduto()->getValor(true)?></td>
+                  <td><?=$produto->getQuantidade()?></td>
+                </tr>
+                <?php 
+								    }
+                ?>
+              </tbody>
+            </table>

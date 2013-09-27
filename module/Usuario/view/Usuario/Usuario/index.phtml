@@ -1,0 +1,135 @@
+<!--PAGINA DETALHES DO PEDIDO-->
+         <?php 
+         $filter = new \NumberFormatter('pt_BR', \NumberFormatter::CURRENCY);
+             if($this->recibos)
+             {
+         ?>
+		<div id="DetalheDoPedido">
+				<h3 class="tt_DetalheDoPedido">Meus Pedidos</h3>
+				<div id="BoxDetalheDoPedido">
+					<!--CONTEUDO DETALHES DO PEDIDO-->
+					<?php     
+					    foreach($this->recibos AS $recibo)
+					    {
+					?>
+						<ul id="DadosDetalheDoPedido">
+							 <li class="tt_Pedidos">Número do pedido</li>
+							 <li class="tt_Pedidos">Data do pedido</li>
+							 <li class="tt_Pedidos">Forma de pagamento</li>
+							 <li class="tt_Pedidos">Valor total</li>
+						</ul>
+
+						<ul>
+							<li class="DadosDoPedido">
+								<div id="ContainerDetalheDoPedido">
+								 	<p><a class="txt_NumeroDetalhePedido" href="<?=$this->url("Painel-usuario/Painel-usuario-recibo",array("idPedido" => $recibo->getIdcontrolerecibo()*3500));?>" title="Veja o detalhe do seu pedido">000<?=$recibo->getIdcontrolerecibo()?></a></p>
+								</div>
+								<div id="ContainerDetalheDoPedido">
+								 	<p class="txt_DadosDoPedido"><?
+								 	print $recibo->getDtVenda()->format("d/m/Y h:m:s");
+						?></p>
+								</div>
+								<div id="ContainerDetalheDoPedido">
+								 	<p class="txt_DadosDoPedido"><?
+								 	if($recibo->getFpagamento())
+								 	{
+								 	    print $recibo->getFpagamento()->getTitulo();
+								 	}
+								 	else
+								 	{
+								 		print "Não está definido";
+								 	}
+								 	?></p>
+								</div>
+								<div id="ContainerDetalheDoPedido">
+								    <p class="txt_ValorDadosDoPedido"><?=$filter->format($recibo->getValor())?></p>
+								</div>
+							</li>
+						</ul>
+
+						<!---->
+
+						<ul id="Status">
+							 <li class="tt_Status">Status de pagamento</li>
+						</ul>
+
+						<ul>
+							<li class="BoxStatus">
+							<?php 
+							    if(!$recibo->getSpagamento())
+							    {
+							?>
+								<div id="ContainerDetalheDoPedido" class="statusNpedido" rel="<?=$recibo->getIdcontrolerecibo()?>">
+								    <a target="_blank" href="https://pagseguro.uol.com.br/v2/checkout/payment.html?code=<?=$recibo->getNpedido()?>" title="Pague Agora"><img class="Txt_PagueAgora" src="<?=$this->basepath()?>/images/PagueAgora.png"></a>
+								</div>
+								<?php 
+							    }else {
+                                ?>
+                                    <div id="ContainerDetalheDoPedido" class="statusNpedido" rel="<?=$recibo->getIdcontrolerecibo()?>">
+    								    <p class="Txt_StatusPagamento"><?=$recibo->getSpagamento()->getTitulo()?></p>
+    								</div>
+                                <?							    	
+							    }
+								?>
+							</li>
+						</ul>
+
+						<!---->
+
+						<ul id="Status">
+							 <li class="tt_Status">Status de Envio</li>
+						</ul>
+
+						<ul>
+							<li class="BoxStatus">
+								<div id="ContainerDetalheDoPedido">
+								    <p class="Txt_StatusEnvio">
+								        <?if(!$recibo->getStatus()) print "Não disponível"; else print $recibo->getStatus();?>
+								    </p>
+								</div>
+							</li>
+						</ul>
+				<!--FIM DO CONTEUDO DETALHES DO PEDIDO-->
+<?php 
+					    }	    
+?>
+				</div>		
+				
+		</div>
+		<?php 
+             }
+		?>
+    <!--FIM DA PAGINA DETALHES DO PEDIDO-->
+
+
+
+<!--Area do Cliente-->
+
+				<div id="AreaCliente">
+					<div id="MeusDados">
+						<h5 class="tt_MeusDados">Meus Dados</h5>
+							<div id="BoxMeusDados">
+								<p class="NameMeusDados"><?if($this->cadastro->getNome()) print $this->cadastro->getNome(); else print "Nome não cadastrado.";?></p>
+                                <p class="EmailMeusDados"><?=$this->usuario->getEmail()?></p>
+                                <p class="AlterarMeusDados"><a href="#">alterar senha</a></p>
+					            <input type="submit" value="Editar" class="EditarDados">
+							</div>
+					</div>
+
+					<div id="MeuEndereco">
+						<h5 class="tt_MeuEndereco">Meu Endereço</h5>
+							<div id="BoxMeuEndereco">
+								<p class="NomeEndereco"><?if($this->cadastro->getNome()) print $this->cadastro->getNome(); else print "Nome não cadastrado.";?></p>
+								<p class="DescEndereco"><b>Endereço:</b><?if($this->cadastro->getRua()) print $this->cadastro->getRua().",".$this->cadastro->getNumero(); else print "Indisponivel";?><br/>
+								<B>Bairro:</B><?if($this->cadastro->getBairro()) print $this->cadastro->getBairro(); else print "Indisponivel";?><br/>
+								<B>Cep:</B><?if($this->cadastro->getCep()) print $this->cadastro->getCep(); else print "Indisponivel";?><br/>
+								<B>Cidade:</B><?if($this->cadastro->getMapeamentocidade()) print $this->cadastro->getMapeamentocidade()->getNome(); else print "Cidade não cadastrada.";?><br/>
+								<B>Estado:</B><?if($this->cadastro->getMapeamentocidade()) print $this->cadastro->getMapeamentocidade()->getMapeamentoestado()->getNome(); else print "Estado não cadastrado.";?><br/>
+								</p> 
+								<input type="submit" value="adicionar novo endereço" class="NovoEndereco">
+					            <input type="submit" value="Editar" class="EditarDados">
+							</div>
+					</div>
+
+				</div>
+				<!--Fim da Area do Cliente-->	

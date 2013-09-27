@@ -1,0 +1,8 @@
+<?php 
+    foreach($this->cidades AS $cidade)
+    {
+    	?>
+    	<option value="<?=$cidade->getIdcidade()?>"><?=$cidade->getNome()?></option>
+    	<?php 
+    }
+?>

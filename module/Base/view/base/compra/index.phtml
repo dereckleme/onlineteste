@@ -1,0 +1,184 @@
+<?php 
+$filter = new \NumberFormatter('pt_BR', \NumberFormatter::CURRENCY);
+?>
+<!--Slider de Produtos-->
+	<div id="SliderProdutosGeral">
+		<h3 class="SliderProdutosGeral">Veja mais alguns produtos Seleto</h3>
+			<div id="StructureSlider">	
+			 <!--<a href="" style="display:none"><span class="seta_slider_esquerda"><img src="<?=$this->basePath()?>/images/seta_slider_esquerda.png"></span></a>-->
+				<div id="BoxSliderProdutos">
+					<ul id="BaseSlider">
+					<?php 
+					    foreach($this->produtosPublicidade AS $produto)
+					    {
+					?>
+						<li class="ContSlider">
+							<a href="<?=$produto->getIdproduto()?>" rev="<?=$produto->getValor(true)?>" rel="<?=$produto->getTitulo()?>"><img class="ImgContSlider" src="<?=$this->basePath()?>/images/produtos/thumb_small/<?=$produto->getFoto();?>"></a>
+						</li>
+						<?php 
+					    }
+						?>
+					</ul>
+				</div>
+			 <!--<a href="" style="display:none"><span class="seta_slider_direita"><img src="<?=$this->basePath()?>/images/seta_slider_direita.png"></span></a>-->
+			
+				  <div id="ProductDescription" style="display:none">
+				  	
+				  	<!--Descrição dos Produtos do Slider-->
+				 	  <div id="BoxProductDescription">
+				 	  	<img class="detalhe_slider" src="<?=$this->basePath()?>/images/detalhe_slider.png">
+				 	  	<div id="ProductDescriptionContent">
+				 	  		<a href=""><p class="txtProductDescription">Lorem ipsum</p></a>
+				 	  		<p class="ValueProductDescription">R$ 00,00</p>
+				 	  		<a href="" class="adicionarAcesta"><span class="ButtonProductDescription">Adicionar na cesta</span></a>
+				 	  	</div> 
+				 	  </div>
+				 	  <!--Fim Descrição dos Produtos do Slider-->
+
+				  </div>
+
+			</div> 
+	</div>
+      <!--Fim do Slider de Produtos-->
+<?php 
+    if(count($this->carrinhoLista['listaAtual']) >= 1)
+    {
+?>
+
+         <!--Pagina do Carrinho de Compras-->
+		<div id="CestaCompras">
+				<h3 class="CestaCompras">Minha cesta de compras</h3>
+				<div id="BoxCestaCompras">
+
+						<ul id="HeaderCestaCompras">
+							 <li class="CestaTopoProduto">Produto</li>
+							 <li class="CestaTopoDescricao">Descrição</li>
+							 <li class="CestaTopoValor">Valor R$</li>
+							 <li class="CestaTopoQtd">Quantidade</li>
+							 <li class="CestaTopoSub">Subtotal R$</li>
+							 <li class="CestaTopoExcluir">Excluir</li>
+						</ul>
+
+							<ul id="BoxListaProduto">
+							
+            <?php 
+    foreach($this->carrinhoLista['listaAtual'] AS $produto)
+    {
+    	?>
+    	
+								 <li class="ListaDaCesta">
+								     
+								 	<div id="ProductsFromBasket">
+								 		<img class="ImgProductsBasket" src="<?=$this->basePath()?>/images/produtos/thumb_small/<?=$produto['produto']->getFoto();?>">
+								 	</div>
+								 	<div id="ProductsFromBasket">
+								 		<p class="DescriptionProductsBasket"><?=$produto['produto']->getTitulo()?><?
+								 		    if($produto['produto']->getEstoque()[0]->getQuantidade() <= $produto['quantidade']) print ',<br/><span style="color:red">Limite de estoque atingido.</span>';
+								 		?></p>
+								 	</div>
+								 	<div id="ProductsFromBasket">
+								 		<p class="ValueProductsFromBasket"><?=$produto['produto']->getValor(true)?></p>
+								 	</div>
+                                    <input class="actionCode" type="hidden" value="<?=$produto['produto']->getIdproduto()?>"/>
+								 	<div id="ProductsFromBasket">
+									 	<span class="AmountProductsFromBasket">	
+									 	   
+			            				  <input style="background-color:#fff" disabled class="qtd_carrinho" type="text" name="quantidade" value="<?
+			            				  if($produto['produto']->getEstoque()[0]->getQuantidade() < $produto['quantidade'])
+			            				  {
+			            				  	  print $produto['produto']->getEstoque()[0]->getQuantidade();
+			            				  }
+			            				  else
+			            				  {
+			            				     print $produto['quantidade'];
+			            				  }
+			            				  ?>">
+			            					<ul class="Qtd_Mudar">
+			            					  <li class="change_qtd_carrinho MoreItens"> <a href="#">mais</a></li>
+			                                   <li class="change_qtd_carrinho  LessItens"> <a href="#">menos</a></li> 
+			            					</ul>
+			            				</span>
+								 	</div>
+
+								 	<div id="ProductsFromBasket">
+								 		<p class="SubTotalProductsFromBasket"><?=$filter->formatCurrency($produto['produto']->getValor()*$produto['quantidade'], 'BRL');?></p>
+								 	</div>
+
+								 	<div id="ProductsFromBasket">
+								 	  <a href="">
+								 		<img class="CloseProductsFromBasket" src="<?=$this->basePath()?>/images/fechar_carrinhodecompras.png" title="excluir do carrinho de compras">
+								 	  </a>
+								 	</div>
+								  </li>
+							  <?php }?>
+								<!--Fim do Produto no Carrinho-->
+							</ul>
+
+						<ul id="HeaderCestaCompras">
+							  <li class="txt_prazoDentrega">Consulte o valor do seu frete</li>
+								 <li class="SeuCep">
+								 	<p class="txt_SeuCep">Digite seu CEP</p>
+
+								 	    <a href="#" title="Calcular frete">
+									 		
+									 		<input class="DigCep1" value="<?if(!empty($this->cep)) print $this->cep?>">
+									 		<span class="CalcFret">
+									 		 Calcular frete
+									 		</span>
+
+									 	</a>
+								 </li>
+
+								 <li>
+								 	<a class="ProcurarCep" href="#" title="Encontre seu CEP">
+								 		<u>Não sei meu CEP</u>
+								 	</a>
+								 </li>
+						</ul>
+
+						<ul id="BoxListaProduto">
+						 <span class="BoxEntrega">						 	
+						 	 <p class="TxtBoxEntrega">
+						 		<span class="CaixaAltaEntrega">prazo máximo de entrega:</span>
+						 		 até 7 dias úteis</p>
+						 </span>
+							<li class="ListaDaCesta2">								
+								<p class="txt_aviso"><span class="txt_aviso_atencao"><strong>Atenção:</strong></span> O prazo começa a contar a<br/> partir da aprovação do crédito.</p>
+		                        <p class="txt_frete"><?if(!empty($this->valorFrete)) print "FRETE: ".$this->valorFrete;?></p>
+		                        
+		                        <p class="CalcSomaValor"><?=$this->carrinhoLista['valorTotal']?></p>
+		                        <p class="txt_TotalFrete">Total<?if(!empty($this->valorFrete)) print " com frete";?>:</p>
+							</li>
+
+						  <a href="<?=$this->url("home")?>"><span class="ButtonCarCompras_Comprar">CONTINUAR COMPRANDO</span></a>
+						  <a href="<?=$this->url("publico-finaliza-compra")?>"><span class="ButtonCarCompras_Finalizar">FINALIZAR COMPRA</span></a>
+
+						</ul>
+
+				</div>		
+				
+		</div>
+		<?php 
+    }
+    else {
+    	
+?>			           <!--Pagina Vazia do Carrinho de Compras-->
+       <div id="CestaCompras">
+				<h3 class="CestaCompras">Minha cesta de compras</h3>
+					<div id="BoxCestaCompras">
+
+						<img class="imgCestaVazia" src="<?=$this->basePath()?>/images/cestaVazia.png" title="cesta vazia">
+
+							<div id="CestaVazia">
+								<p class="txtCestaVazia"><span class="ttCestaVazia">Sua cesta de compras esta vazia.</span><br/><br/>
+								Você ainda não adicionou nenhum produto ao seu carrinho de compras. Navegue pelo site<br/> e selecione os produtos desejados.</p>
+								<a href="#"><span class="ButtonCestaVazia" title="continuar comprando">CONTINUAR COMPRANDO</span></a>
+							</div>	
+
+					</div>
+		</div>
+		                <!--Fim da Pagina Vazia do Carrinho de Compras-->		
+<?php 
+    }
+?>	
+          <!--Fim da Pagina do Carrinho de Compras-->

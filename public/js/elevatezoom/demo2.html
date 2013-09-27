@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'/>
+	<title>jQuery elevateZoom Demo</title>
+	<script src='jquery-1.8.3.min.js'></script>
+	<script src='jquery.elevatezoom.js'></script>
+	<style type="text/css">
+		#gal1 img{border:2px solid white;}
+		.active img{border:2px solid #333 !important;}
+	</style>
+</head>
+<body>
+
+<!-- <div class="zoomWrapper" style="height:274px;width:411px;"> -->
+	<img id="zoom_03" width="411" data-zoom-image="images/large/image3.jpg" src="images/small/image3.png" style="border: 1px solid rgb(232, 232, 230); position: absolute;">
+<!-- </div> -->
+
+<div id="gallery_01" style="width:500px;float:left;">
+	<a class="elevatezoom-gallery active" data-zoom-image="images/large/image1.jpg" data-image="images/small/image1.png" data-update="" href="#">
+		<img width="100" src="images/small/image1.png">
+	</a>
+	<a class="elevatezoom-gallery" data-zoom-image="images/large/image2.jpg" data-image="images/small/image2.png" href="#">
+		<img width="100" src="images/small/image2.png">
+	</a>
+	<a class="elevatezoom-gallery" data-zoom-image="images/large/image3.jpg" data-image="images/small/image3.png" href="tester">
+		<img width="100" src="images/small/image3.png">
+	</a>
+	<a class="elevatezoom-gallery" data-zoom-image="images/large/image4.jpg" data-image="images/small/image4.png" href="tester">
+		<img width="100" src="images/small/image4.png">
+	</a>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+	$("#zoom_03").elevateZoom({gallery:'gallery_01', cursor: 'pointer', galleryActiveClass: "active", imageCrossfade: true, loadingIcon: "spinner.gif"}); 
+
+	$("#zoom_03").bind("click", function(e) {  
+	  var ez =   $('#zoom_03').data('elevateZoom');
+	  ez.closeAll(); //NEW: This function force hides the lens, tint and window	
+		$.fancybox(ez.getGalleryList());
+	  return false;
+	}); 
+
+}); 
+
+</script>
+
+</body>
+</html>
